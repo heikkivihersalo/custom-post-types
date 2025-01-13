@@ -45,6 +45,16 @@ trait FilePaths {
 	public string $base_uri;
 
 	/**
+	 * Base namespace for files
+	 * This is used to determine the namespace for the custom post type and taxonomy classes.
+	 *
+	 * @since   0.1.0
+	 * @var     string
+	 * @access  public
+	 */
+	public string $base_namespace;
+
+	/**
 	 * Get URI for file
 	 *
 	 * @since 0.1.0
@@ -66,5 +76,16 @@ trait FilePaths {
 	 */
 	public function get_path( string $path = '' ): string {
 		return rtrim( $this->base_path, '/\\' ) . '/' . $path;
+	}
+
+	/**
+	 * Get namespace for file
+	 *
+	 * @since 0.1.0
+	 * @access public
+	 * @return string
+	 */
+	public function get_namespace(): string {
+		return $this->base_namespace;
 	}
 }
