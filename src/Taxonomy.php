@@ -10,6 +10,8 @@
 
 namespace HeikkiVihersalo\CustomPostTypes;
 
+use HeikkiVihersalo\CustomPostTypes\Interfaces\TaxonomyInterface;
+
 /**
  * Abstract class for registering custom taxonomies
  *
@@ -17,7 +19,7 @@ namespace HeikkiVihersalo\CustomPostTypes;
  * @package    HeikkiVihersalo\CustomPostTypes
  * @author     Heikki Vihersalo <heikki@vihersalo.fi>
  */
-abstract class Taxonomy {
+abstract class Taxonomy implements TaxonomyInterface {
 	/**
 	 * Taxonomy type slug.
 	 *
@@ -48,11 +50,7 @@ abstract class Taxonomy {
 	}
 
 	/**
-	 * Register custom taxonomy
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function register_custom_taxonomy(): void {
 		register_taxonomy(
@@ -63,45 +61,28 @@ abstract class Taxonomy {
 	}
 
 	/**
-	 * Custom Post Type Labels for post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function labels() {
 		return array();
 	}
 
 	/**
-	 * Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users.
-	 * The default settings of $publicly_queryable, $show_ui, and $show_in_nav_menus are inherited from $public
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function public(): bool {
 		return true;
 	}
 
 	/**
-	 * Hierarchical
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hierarchical(): bool {
 		return true;
 	}
 
 	/**
-	 * Rewrite
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function rewrite(): bool|array {
 		return array(
@@ -112,33 +93,14 @@ abstract class Taxonomy {
 	}
 
 	/**
-	 * Show admin column
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function show_admin_column(): bool {
 		return true;
 	}
 
 	/**
-	 * Object types
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return string|array
-	 */
-	public function object_types(): string|array {
-		return array();
-	}
-
-	/**
-	 * Get arguments
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function get_arguments(): array {
 		$args = array(
@@ -163,4 +125,13 @@ abstract class Taxonomy {
 	 * @return void
 	 */
 	abstract protected function register(): void;
+
+	/**
+	 * Object types
+	 *
+	 * @since 0.1.0
+	 * @access public
+	 * @return string|array
+	 */
+	abstract protected function object_types(): string|array;
 }

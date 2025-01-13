@@ -12,6 +12,7 @@ namespace HeikkiVihersalo\CustomPostTypes;
 
 use HeikkiVihersalo\CustomPostTypes\CustomFields;
 use HeikkiVihersalo\CustomPostTypes\Traits\CustomPermalink;
+use HeikkiVihersalo\CustomPostTypes\Interfaces\PostTypeInterface;
 
 /**
  * Abstract class for registering custom post types
@@ -20,7 +21,7 @@ use HeikkiVihersalo\CustomPostTypes\Traits\CustomPermalink;
  * @package    HeikkiVihersalo\CustomPostTypes
  * @author     Heikki Vihersalo <heikki@vihersalo.fi>
  */
-abstract class PostType {
+abstract class PostType implements PostTypeInterface {
 	use CustomPermalink;
 
 	/**
@@ -53,11 +54,7 @@ abstract class PostType {
 	}
 
 	/**
-	 * Register post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function register_custom_post_type(): void {
 		/**
@@ -99,13 +96,9 @@ abstract class PostType {
 	}
 
 	/**
-	 * Custom Post Type Labels for post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return array
+	 * @inheritDoc
 	 */
-	public function labels() {
+	public function labels(): array {
 		return array(
 			'name'               => $this->name,
 			'singular_name'      => $this->name,
@@ -125,13 +118,9 @@ abstract class PostType {
 	}
 
 	/**
-	 * Add support for post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return array
+	 * @inheritDoc
 	 */
-	public function supports() {
+	public function supports(): array {
 		return array(
 			'title',
 			'editor',
@@ -140,22 +129,14 @@ abstract class PostType {
 	}
 
 	/**
-	 * Taxonomies for post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function taxonomies(): array {
 		return array();
 	}
 
 	/**
-	 * Add metaboxes
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function metaboxes(): array {
 		return array(
@@ -260,13 +241,9 @@ abstract class PostType {
 	}
 
 	/**
-	 * Icon for post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return string
+	 * @inheritDoc
 	 */
-	public function icon() {
+	public function icon(): string {
 		return 'dashicons-pressthis';
 	}
 
