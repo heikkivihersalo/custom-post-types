@@ -5,6 +5,13 @@ This is an Laravel style implementation of custom post types in WordPress. It is
 > [!NOTE]
 > Please not that this package is still in development and not yet ready for production use. There can be breaking changes as the wrapper and API develops further. If you want to use this package in production, please fork the repository and use your own version.
 
+## TODO
+
+- [ ] Add custom callback function for taxonomies
+- [ ] Add basic tests for the package to ensure functionality
+- [ ] Add more complex examples for the package
+- [ ] Add rest of the WP methods to the `PostType` and `Taxonomy` classes
+
 ## Installation
 
 To install the package, run the following command:
