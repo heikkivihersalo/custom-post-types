@@ -43,7 +43,7 @@ class Enqueue {
 	 * @param string $hook The current admin page
 	 * @return void
 	 */
-	public function enqueue_scripts_and_styles( string $hook = '' ): void {
+	public function enqueue_editor_assets( string $hook = '' ): void {
 		if ( ! Utils::is_editor_page( $hook ) ) {
 			return;
 		}
