@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class for registering individual custom post type
  *

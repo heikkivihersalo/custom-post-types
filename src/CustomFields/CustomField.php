@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  *
@@ -13,8 +12,8 @@ use HeikkiVihersalo\CustomPostTypes\Interfaces\CustomFieldInterface;
 
 /**
  * Custom field class for custom post types
- * 
- * 
+ *
+ *
  * @package HeikkiVihersalo\CustomPostTypes\CustomFields
  */
 abstract class CustomField implements CustomFieldInterface {
@@ -49,7 +48,7 @@ abstract class CustomField implements CustomFieldInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct(string $id, string $label = '', \WP_Post $post = null, array $options = array()) {
+	public function __construct( string $id, string $label = '', \WP_Post $post = null, array $options = array() ) {
 		$this->id      = $id;
 		$this->label   = $label;
 		$this->post    = $post;
@@ -67,7 +66,7 @@ abstract class CustomField implements CustomFieldInterface {
 	 * @inheritDoc
 	 */
 	public function get_label(): string {
-		if (empty($this->label)) {
+		if ( empty( $this->label ) ) {
 			return $this->id;
 		}
 
@@ -92,7 +91,7 @@ abstract class CustomField implements CustomFieldInterface {
 	 * @inheritDoc
 	 */
 	public function get_value(): string {
-		return esc_attr(get_post_meta($this->post->ID, $this->id, true));
+		return esc_attr( get_post_meta( $this->post->ID, $this->id, true ) );
 	}
 
 	/**
@@ -103,31 +102,31 @@ abstract class CustomField implements CustomFieldInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function sanitize(string $value): string {
-		return sanitize_text_field($value);
+	public function sanitize( string $value ): string {
+		return sanitize_text_field( $value );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function save(int $post_id, array $options = array()): void {
+	public function save( int $post_id, array $options = array() ): void {
 		// Nonce verification is done in the parent class so we can safely ignore it here.
-		if (array_key_exists($this->id, $_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( array_key_exists( $this->id, $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$val = $this->sanitize($_POST[$this->id]); // phpcs:ignore
-			update_post_meta($post_id, $this->id, $val);
+			update_post_meta( $post_id, $this->id, $val );
 		}
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function save_group(int $post_id, array $options): void {
-		foreach ($options as $option) {
+	public function save_group( int $post_id, array $options ): void {
+		foreach ( $options as $option ) {
 			// Nonce verification is done in the parent class so we can safely ignore it here.
-			if (isset($_POST[$this->id . '_' . $option['value']])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-				update_post_meta($post_id, $this->id . '_' . $option['value'], '1');
+			if ( isset( $_POST[ $this->id . '_' . $option['value'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+				update_post_meta( $post_id, $this->id . '_' . $option['value'], '1' );
 			} else {
-				delete_post_meta($post_id, $this->id . '_' . $option['value']);
+				delete_post_meta( $post_id, $this->id . '_' . $option['value'] );
 			}
 		}
 	}
@@ -140,8 +139,8 @@ abstract class CustomField implements CustomFieldInterface {
 			$this->post_types,
 			$this->id,
 			array(
-				'get_callback' => function ($post) {
-					return get_post_meta($post['id'], $this->id, true);
+				'get_callback' => function ( $post ) {
+					return get_post_meta( $post['id'], $this->id, true );
 				},
 				'schema'       => array(
 					'description' => $this->label,

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class for registering individual taxonomy
  *
@@ -34,7 +33,7 @@ class Example extends Taxonomy {
 
 	/**
 	 * Object types
-	 * 
+	 *
 	 * @since 0.1.0
 	 * @access public
 	 * @return string|array

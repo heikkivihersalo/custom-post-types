@@ -17,7 +17,7 @@ class UrlField extends CustomField implements CustomFieldInterface {
 	 */
 	public function get_html(): string {
 		ob_start();
-?>
+		?>
 
 		<tr>
 			<th scope="row">
@@ -28,14 +28,14 @@ class UrlField extends CustomField implements CustomFieldInterface {
 			</td>
 		</tr>
 
-<?php
+		<?php
 		return ob_get_clean();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function sanitize(string $value): string {
-		return sanitize_url($value);
+	public function sanitize( string $value ): string {
+		return sanitize_url( $value );
 	}
 }

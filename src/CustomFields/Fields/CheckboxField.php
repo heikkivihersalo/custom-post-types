@@ -17,7 +17,7 @@ class CheckboxField extends CustomField implements CustomFieldInterface {
 	 */
 	public function get_html(): string {
 		ob_start();
-?>
+		?>
 
 		<tr>
 			<th scope="row">
@@ -29,26 +29,26 @@ class CheckboxField extends CustomField implements CustomFieldInterface {
 						<span><?php echo $this->label; ?></span>
 					</legend>
 					<label for="<?php echo $this->id; ?>">
-						<input id="<?php echo $this->id; ?>" type="checkbox" class="regular-text" name="<?php echo $this->id; ?>" value="1" <?php checked(1, $this->get_value()); ?>>
+						<input id="<?php echo $this->id; ?>" type="checkbox" class="regular-text" name="<?php echo $this->id; ?>" value="1" <?php checked( 1, $this->get_value() ); ?>>
 						<?php echo $this->label; ?>
 					</label>
 				</fieldset>
 			</td>
 		</tr>
 
-<?php
+		<?php
 		return ob_get_clean();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function save(int $post_id, array $options = array()): void {
+	public function save( int $post_id, array $options = array() ): void {
 		// Nonce verification is done in the parent class so we can safely ignore it here.
-		if (isset($_POST[$this->id])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			update_post_meta($post_id, $this->id, '1');
+		if ( isset( $_POST[ $this->id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			update_post_meta( $post_id, $this->id, '1' );
 		} else {
-			delete_post_meta($post_id, $this->id);
+			delete_post_meta( $post_id, $this->id );
 		}
 	}
 }

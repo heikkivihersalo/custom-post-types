@@ -17,7 +17,7 @@ class NumberField extends CustomField implements CustomFieldInterface {
 	 */
 	public function get_html(): string {
 		ob_start();
-?>
+		?>
 
 		<tr>
 			<th scope="row">
@@ -28,7 +28,7 @@ class NumberField extends CustomField implements CustomFieldInterface {
 			</td>
 		</tr>
 
-<?php
+		<?php
 		return ob_get_clean();
 	}
 }

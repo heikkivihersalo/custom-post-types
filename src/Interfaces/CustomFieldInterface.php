@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Custom field interface
  *
@@ -11,7 +10,7 @@ namespace HeikkiVihersalo\CustomPostTypes\Interfaces;
 
 /**
  * Custom field interface
- * 
+ *
  * @package HeikkiVihersalo\CustomPostTypes\Interfaces
  * @since 0.1.0
  */
@@ -25,7 +24,7 @@ interface CustomFieldInterface {
 	 * @param array    $options Array of options for field
 	 * @return void
 	 */
-	public function __construct(string $id, string $label = '', \WP_Post $post = null, array $options = array());
+	public function __construct( string $id, string $label = '', \WP_Post $post = null, array $options = array() );
 
 	/**
 	 * Get id
@@ -38,7 +37,7 @@ interface CustomFieldInterface {
 
 	/**
 	 * Get label
-	 * 
+	 *
 	 * @since 0.1.0
 	 * @access public
 	 * @return string
@@ -91,7 +90,7 @@ interface CustomFieldInterface {
 	 * @param string $value Field value
 	 * @return string
 	 */
-	public function sanitize(string $value): string;
+	public function sanitize( string $value ): string;
 
 	/**
 	 * Save field
@@ -101,7 +100,7 @@ interface CustomFieldInterface {
 	 * @param int $post_id Post ID
 	 * @return int
 	 */
-	public function save(int $post_id, array $options = array()): void;
+	public function save( int $post_id, array $options = array() ): void;
 
 	/**
 	 * Register rest field

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class responsible for adding custom fields to post types
  *
@@ -64,7 +63,7 @@ class CustomFields {
 	 *
 	 * @var array
 	 */
-	protected array $post_types = array('post', 'page');
+	protected array $post_types = array( 'post', 'page' );
 
 	/**
 	 * Position
@@ -92,8 +91,8 @@ class CustomFields {
 	 * @param string $priority Priority of metabox (default: high)
 	 * @return void
 	 */
-	public function __construct(array $fields, string $title, array $post_types = array('post', 'page'), string $position = 'normal', string $priority = 'high') {
-		$this->fields      = $fields;
+	public function __construct( array $fields, string $title, array $post_types = array( 'post', 'page' ), string $position = 'normal', string $priority = 'high' ) {
+		$this->fields     = $fields;
 		$this->title      = $title;
 		$this->post_types = $post_types;
 		$this->position   = $position;
@@ -107,9 +106,9 @@ class CustomFields {
 	 */
 	public function add_metabox(): void {
 		add_meta_box(
-			preg_replace('/\s+/', '-', strtolower($this->title)),
+			preg_replace( '/\s+/', '-', strtolower( $this->title ) ),
 			$this->title,
-			array($this, 'render_html'),
+			array( $this, 'render_html' ),
 			$this->post_types,
 			$this->position,
 			$this->priority
@@ -122,66 +121,66 @@ class CustomFields {
 	 * @param \WP_Post $post Post object
 	 * @return void
 	 */
-	public function render_html(\WP_Post $post): void {
-		wp_nonce_field(basename(__FILE__), $this->nonce);
+	public function render_html( \WP_Post $post ): void {
+		wp_nonce_field( basename( __FILE__ ), $this->nonce );
 
 		echo '<table class="form-table">';
 		echo '<tbody>';
 
-		foreach ($this->fields as $field) :
-			switch ($field['type']) {
+		foreach ( $this->fields as $field ) :
+			switch ( $field['type'] ) {
 				case 'checkbox':
-					$checkbox_field = new CheckboxField($field['id'], $field['label'], $post);
+					$checkbox_field = new CheckboxField( $field['id'], $field['label'], $post );
 					echo $checkbox_field->get_html();
 					break;
 
 				case 'checkbox-group':
-					$checkbox_group_field = new CheckboxGroupField($field['id'], $field['label'], $post, $field['options']);
+					$checkbox_group_field = new CheckboxGroupField( $field['id'], $field['label'], $post, $field['options'] );
 					echo $checkbox_group_field->get_html();
 					break;
 
 				case 'date':
-					$date_field = new DateField($field['id'], $field['label'], $post);
+					$date_field = new DateField( $field['id'], $field['label'], $post );
 					echo $date_field->get_html();
 					break;
 
 				case 'image':
-					$image_field = new ImageField($field['id'], $field['label'], $post);
+					$image_field = new ImageField( $field['id'], $field['label'], $post );
 					echo $image_field->get_html();
 					break;
 
 				case 'number':
-					$number_field = new NumberField($field['id'], $field['label'], $post);
+					$number_field = new NumberField( $field['id'], $field['label'], $post );
 					echo $number_field->get_html();
 					break;
 
 				case 'radio-group':
-					$radio_group_field = new RadioGroupField($field['id'], $field['label'], $post, $field['options']);
+					$radio_group_field = new RadioGroupField( $field['id'], $field['label'], $post, $field['options'] );
 					echo $radio_group_field->get_html();
 					break;
 
 				case 'rich-text':
-					$rich_text_field = new RichTextField($field['id'], $field['label'], $post);
+					$rich_text_field = new RichTextField( $field['id'], $field['label'], $post );
 					echo $rich_text_field->get_html();
 					break;
 
 				case 'select':
-					$select_field = new SelectField($field['id'], $field['label'], $post, $field['options']);
+					$select_field = new SelectField( $field['id'], $field['label'], $post, $field['options'] );
 					echo $select_field->get_html();
 					break;
 
 				case 'text':
-					$text_field = new TextField($field['id'], $field['label'], $post);
+					$text_field = new TextField( $field['id'], $field['label'], $post );
 					echo $text_field->get_html();
 					break;
 
 				case 'textarea':
-					$textarea_field = new TextAreaField($field['id'], $field['label'], $post);
+					$textarea_field = new TextAreaField( $field['id'], $field['label'], $post );
 					echo $textarea_field->get_html();
 					break;
 
 				case 'url':
-					$url_field = new UrlField($field['id'], $field['label'], $post);
+					$url_field = new UrlField( $field['id'], $field['label'], $post );
 					echo $url_field->get_html();
 					break;
 
@@ -201,83 +200,83 @@ class CustomFields {
 	 * @param int $post_id Post ID
 	 * @return int Post ID
 	 */
-	public function save_metabox(int $post_id): int {
+	public function save_metabox( int $post_id ): int {
 		/**
 		 * Validate save function
 		 */
-		$sanitized_nonce = isset($_POST[$this->nonce]) ? sanitize_text_field(wp_unslash($_POST[$this->nonce])) : '';
-		$nonce_action    = basename(__FILE__);
+		$sanitized_nonce = isset( $_POST[ $this->nonce ] ) ? sanitize_text_field( wp_unslash( $_POST[ $this->nonce ] ) ) : '';
+		$nonce_action    = basename( __FILE__ );
 
-		if (! wp_verify_nonce($sanitized_nonce, $nonce_action)) {
+		if ( ! wp_verify_nonce( $sanitized_nonce, $nonce_action ) ) {
 			return $post_id;
 		}
 
-		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_id;
 		}
 
-		if (! current_user_can('edit_post', $post_id)) {
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return $post_id;
 		}
 
 		/**
 		 * Sanitize fields
 		 */
-		foreach ($this->fields as $field) :
-			switch ($field['type']) {
+		foreach ( $this->fields as $field ) :
+			switch ( $field['type'] ) {
 				case 'checkbox-group':
-					$checkbox_group = new CheckboxGroupField($field['id']);
-					$checkbox_group->save_group($post_id, $field['options']);
+					$checkbox_group = new CheckboxGroupField( $field['id'] );
+					$checkbox_group->save_group( $post_id, $field['options'] );
 					break;
 
 				case 'checkbox':
-					$checkbox_field = new CheckboxField($field['id']);
-					$checkbox_field->save($post_id);
+					$checkbox_field = new CheckboxField( $field['id'] );
+					$checkbox_field->save( $post_id );
 					break;
 
 				case 'date':
-					$date_field = new DateField($field['id']);
-					$date_field->save($post_id);
+					$date_field = new DateField( $field['id'] );
+					$date_field->save( $post_id );
 					break;
 
 				case 'image':
-					$image_field = new ImageField($field['id']);
-					$image_field->save($post_id);
+					$image_field = new ImageField( $field['id'] );
+					$image_field->save( $post_id );
 					break;
 
 				case 'number':
-					$number_field = new NumberField($field['id']);
-					$number_field->save($post_id);
+					$number_field = new NumberField( $field['id'] );
+					$number_field->save( $post_id );
 					break;
 
 				case 'rich-text':
-					$rich_text_field = new RichTextField($field['id']);
-					$rich_text_field->save($post_id);
+					$rich_text_field = new RichTextField( $field['id'] );
+					$rich_text_field->save( $post_id );
 					break;
 
 				case 'radio-group':
-					$radio_group_field = new RadioGroupField($field['id']);
-					$radio_group_field->save($post_id);
+					$radio_group_field = new RadioGroupField( $field['id'] );
+					$radio_group_field->save( $post_id );
 					break;
 
 				case 'select':
-					$select_field = new SelectField($field['id']);
-					$select_field->save($post_id);
+					$select_field = new SelectField( $field['id'] );
+					$select_field->save( $post_id );
 					break;
 
 				case 'text':
-					$text_field = new TextField($field['id']);
-					$text_field->save($post_id);
+					$text_field = new TextField( $field['id'] );
+					$text_field->save( $post_id );
 					break;
 
 				case 'textarea':
-					$textarea_field = new TextAreaField($field['id']);
-					$textarea_field->save($post_id);
+					$textarea_field = new TextAreaField( $field['id'] );
+					$textarea_field->save( $post_id );
 					break;
 
 				case 'url':
-					$url_field = new UrlField($field['id']);
-					$url_field->save($post_id);
+					$url_field = new UrlField( $field['id'] );
+					$url_field->save( $post_id );
 					break;
 
 				default:
@@ -291,13 +290,13 @@ class CustomFields {
 
 	/**
 	 * Register custom fields
-	 * 
+	 *
 	 * @since 0.1.0
 	 * @access public
 	 * @return void
 	 */
 	public function register(): void {
-		add_action('add_meta_boxes', array($this, 'add_metabox'));
-		add_action('save_post', array($this, 'save_metabox'));
+		add_action( 'add_meta_boxes', array( $this, 'add_metabox' ) );
+		add_action( 'save_post', array( $this, 'save_metabox' ) );
 	}
 }

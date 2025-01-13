@@ -16,12 +16,12 @@ class SelectField extends CustomField implements CustomFieldInterface {
 	 * @inheritDoc
 	 */
 	public function get_html(): string {
-		if (empty($this->id)) {
-			return __('ID is required', 'heikkivihersalo-custom-post-types');
+		if ( empty( $this->id ) ) {
+			return __( 'ID is required', 'heikkivihersalo-custom-post-types' );
 		}
 
 		ob_start();
-?>
+		?>
 
 		<tr>
 			<th scope="row">
@@ -31,8 +31,8 @@ class SelectField extends CustomField implements CustomFieldInterface {
 			</th>
 			<td>
 				<select name="<?php echo $this->id; ?>" id="<?php echo $this->id; ?>">
-					<?php foreach ($this->options as $option) : ?>
-						<option value="<?php echo $option['value']; ?>" <?php echo selected($this->get_value(), $option['value']); ?>>
+					<?php foreach ( $this->options as $option ) : ?>
+						<option value="<?php echo $option['value']; ?>" <?php echo selected( $this->get_value(), $option['value'] ); ?>>
 							<?php echo $option['label']; ?>
 						</option>
 					<?php endforeach; ?>
@@ -40,14 +40,14 @@ class SelectField extends CustomField implements CustomFieldInterface {
 			</td>
 		</tr>
 
-<?php
+		<?php
 		return ob_get_clean();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function sanitize(string $value): string {
-		return sanitize_text_field($value);
+	public function sanitize( string $value ): string {
+		return sanitize_text_field( $value );
 	}
 }
