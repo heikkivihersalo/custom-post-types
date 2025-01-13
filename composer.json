@@ -1,0 +1,32 @@
+{
+    "name": "heikkivihersalo/custom-post-types",
+    "description": "Flexible Laravel style custom post types for WordPress",
+    "type": "library",
+	"license": "GPL-2.0-or-later",
+	"config": {
+		"platform": {
+			"php": "8.2"
+		},
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"version": "0.1.0",
+    "autoload": {
+        "psr-4": {
+            "HeikkiVihersalo\\CustomPostTypes\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Heikki Vihersalo",
+            "email": "heikki@vihersalo.fi"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+		"phpunit/phpunit": "9.*",
+        "squizlabs/php_codesniffer": "*",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7"
+    }
+}
