@@ -69,6 +69,20 @@ Eventually this will include all the methods from the `register_post_type()` fun
 
 To register metaboxes for the custom post type, you can use the `metaboxes()` method in the `PostType` class. Following array will add all available metaboxes to the custom post type.
 
+Following metaboxes are available:
+
+- Text
+- Textarea
+- URL
+- Number
+- Checkbox
+- Checkbox Group
+- Date
+- Image
+- Select
+- Rich Text
+- Radio Group
+
 ```php
 
 public function metaboxes(): array {
