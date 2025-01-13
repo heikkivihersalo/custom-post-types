@@ -11,6 +11,7 @@
 namespace HeikkiVihersalo\CustomPostTypes\PostTypes;
 
 use HeikkiVihersalo\CustomPostTypes\PostType;
+use HeikkiVihersalo\CustomPostTypes\Interfaces\PostTypeInterface;
 
 /**
  * Class for registering individual custom post type
@@ -19,13 +20,9 @@ use HeikkiVihersalo\CustomPostTypes\PostType;
  * @package    HeikkiVihersalo\CustomPostTypes\PostTypes
  * @author     Heikki Vihersalo <heikki@vihersalo.fi>
  */
-class Example extends PostType {
+class Example extends PostType implements PostTypeInterface {
 	/**
-	 * Register post type
-	 *
-	 * @since 0.1.0
-	 * @access public
-	 * @return void
+	 * @inheritDoc
 	 */
 	public function register(): void {
 		$this->register_custom_post_type();
