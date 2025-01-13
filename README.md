@@ -63,7 +63,7 @@ class Example extends PostType implements PostTypeInterface {
 
 Basically this is everything you need to register a custom post type. For more complex implementations, you can override the methods from the `PostType` class. For example, `labels()` method can be overridden to provide custom labels for the post type or `icon()` method can be overridden to provide custom arguments for the post type. 
 
-Eventually this will include all the methods from the `WP_Post_Type` class, so you can override any of the methods from the parent class.
+Eventually this will include all the methods from the `register_post_type()` function, so you can override any of the methods from the parent class.
 
 #### Registering metaboxes
 
