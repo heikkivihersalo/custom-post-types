@@ -34,9 +34,10 @@ class CPTLoader {
 	 * @param string $base_uri Base URI for the plugin.
 	 * @return void
 	 */
-	public function __construct( string $base_path, string $base_uri ) {
-		$this->base_path = $base_path;
-		$this->base_uri  = $base_uri;
+	public function __construct( string $base_path, string $base_uri, string $base_namespace ) {
+		$this->base_path      = $base_path;
+		$this->base_uri       = $base_uri;
+		$this->base_namespace = $base_namespace;
 	}
 
 	/**
@@ -48,7 +49,7 @@ class CPTLoader {
 	 * @throws WP_Error If the class file does not exist.
 	 */
 	public function load_classes_dynamically( string $folder ): void {
-		$classes = scandir( $this->base_path . $folder );
+		$classes = scandir( $this->get_path() . $folder );
 
 		foreach ( $classes as $class ) {
 			// Remove unnecessary files (e.g. .gitignore, .DS_Store, ., .. etc.)
@@ -56,16 +57,22 @@ class CPTLoader {
 				continue;
 			}
 
+			$path  = $this->get_path() . $folder . '/' . $class;
 			$class = Utils::remove_file_extension( $class );
 			$slug  = Utils::camelcase_to_kebabcase( $class );
 
-			$classname = __NAMESPACE__ . '\\' . $folder . '\\' . $class;
+			$classname = $this->get_namespace() . '\\' . $class;
 
+			// Get the class file, only try to require if not already imported
 			if ( ! class_exists( $classname ) ) {
-				throw new WP_Error( 'invalid-class', __( 'The class you attempting to create does not exist.', 'heikkivihersalo-custom-post-types' ), $classname );
+				require $path;
 			}
 
-			$class_instance = new $classname();
+			if ( ! class_exists( $classname ) ) {
+				return;
+			}
+
+			$class_instance = new $classname( $slug, $class );
 			$class_instance->register();
 		}
 	}
@@ -77,7 +84,7 @@ class CPTLoader {
 	 * @access public
 	 * @return void
 	 */
-	protected function build_post_types(): void {
+	public function build_post_types(): void {
 		$this->load_classes_dynamically( 'inc/post-types' );
 	}
 
@@ -88,7 +95,7 @@ class CPTLoader {
 	 * @access public
 	 * @return void
 	 */
-	protected function build_taxonomies(): void {
+	public function build_taxonomies(): void {
 		$this->load_classes_dynamically( 'inc/taxonomies' );
 	}
 
