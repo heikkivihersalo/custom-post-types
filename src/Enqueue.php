@@ -10,6 +10,7 @@
 
 namespace HeikkiVihersalo\CustomPostTypes;
 
+use HeikkiVihersalo\CustomPostTypes\Traits\FilePaths;
 use HeikkiVihersalo\CustomPostTypes\Utils;
 
 /**
@@ -20,20 +21,19 @@ use HeikkiVihersalo\CustomPostTypes\Utils;
  * @author     Heikki Vihersalo <heikki@vihersalo.fi>
  */
 class Enqueue {
-	/**
-	 * Asset base URI
-	 *
-	 * @since   0.1.0
-	 * @var     string
-	 * @access  public
-	 */
-	public string $asset_base_uri;
+	use FilePaths;
 
 	/**
 	 * Constructor
+	 *
+	 * @since 0.1.0
+	 * @param string $base_path The base path
+	 * @param string $base_uri The base URI
+	 * @return void
 	 */
-	public function __construct() {
-		$this->asset_base_uri = Utils::get_base_uri( 'heikkivihersalo/custom-post-types' );
+	public function __construct( string $base_path, string $base_uri ) {
+		$this->base_path = $base_path;
+		$this->base_uri  = $base_uri;
 	}
 
 	/**
@@ -48,22 +48,19 @@ class Enqueue {
 			return;
 		}
 
-		if ( ! $this->asset_base_uri ) {
-			return;
-		}
-
 		wp_enqueue_script(
 			'hv-custom-post-types',
-			$this->asset_base_uri . 'main.js',
+			$this->get_uri( 'dist/main.js' ),
 			array(),
-			Utils::get_asset_version( $this->asset_base_uri, 'main.js' ),
+			Utils::get_asset_version( $this->get_path( 'dist/main.js' ) ),
 			true
 		);
+
 		wp_enqueue_style(
 			'hv-custom-post-types',
-			$this->asset_base_uri . 'main.css',
+			$this->get_uri( 'dist/main.css' ),
 			array(),
-			Utils::get_asset_version( $this->asset_base_uri, 'main.css' ),
+			Utils::get_asset_version( $this->get_path( 'dist/main.css' ) ),
 			'all'
 		);
 	}

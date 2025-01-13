@@ -13,6 +13,7 @@ namespace HeikkiVihersalo\CustomPostTypes;
 use WP_Error;
 use HeikkiVihersalo\CustomPostTypes\Enqueue;
 use HeikkiVihersalo\CustomPostTypes\Utils;
+use HeikkiVihersalo\CustomPostTypes\Traits\FilePaths;
 
 /**
  * Functionality for registering and handling custom post types
@@ -22,37 +23,15 @@ use HeikkiVihersalo\CustomPostTypes\Utils;
  * @author     Heikki Vihersalo <heikki@vihersalo.fi>
  */
 class CPTLoader {
-	/**
-	 * Base path for files
-	 * This is used to determine where the custom post type and taxonomy classes are located.
-	 * E.g.
-	 *  - If the library is used in a theme, the base path would be the theme directory.
-	 *  - And if the library is used in a plugin, the base path would be the plugin directory.
-	 *
-	 * @since   0.1.0
-	 * @var     string
-	 * @access  public
-	 */
-	public string $base_path;
-
-	/**
-	 * Base URI for files
-	 * This is used to determine where the custom post type and taxonomy classes are located.
-	 * E.g.
-	 *  - If the library is used in a theme, the base URI would be the theme directory URI.
-	 *  - And if the library is used in a plugin, the base URI would be the plugin directory URI.
-	 *
-	 * @since   0.1.0
-	 * @var     string
-	 * @access  public
-	 */
-	public string $base_uri;
+	use FilePaths;
 
 	/**
 	 * Constructor
 	 *
 	 * @since 0.1.0
 	 * @access public
+	 * @param string $base_path Base path for the plugin.
+	 * @param string $base_uri Base URI for the plugin.
 	 * @return void
 	 */
 	public function __construct( string $base_path, string $base_uri ) {
@@ -126,7 +105,7 @@ class CPTLoader {
 		add_action( 'after_setup_theme', array( $this, 'build_taxonomies' ) );
 
 		// Add scripts and styles
-		$enqueue = new Enqueue( $this->base_uri );
+		$enqueue = new Enqueue( $this->base_path, $this->base_uri );
 		add_action( 'admin_enqueue_scripts', array( $enqueue, 'enqueue_editor_assets' ) );
 	}
 }
