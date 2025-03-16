@@ -97,6 +97,19 @@ abstract class CustomField implements CustomFieldInterface {
 	/**
 	 * @inheritDoc
 	 */
+	public function get_taxonomy_value(): string {
+		$current_value = get_the_terms( get_the_ID(), $this->taxonomy );
+
+		if ( ! $current_value ) {
+			return '';
+		}
+
+		return $current_value[0]->term_id;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	abstract public function get_html(): string;
 
 	/**
@@ -104,6 +117,13 @@ abstract class CustomField implements CustomFieldInterface {
 	 */
 	public function sanitize( string $value ): string {
 		return sanitize_text_field( $value );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function sanitize_taxonomy( string $value ): string {
+		return (int) sanitize_text_field( $value );
 	}
 
 	/**
@@ -129,6 +149,22 @@ abstract class CustomField implements CustomFieldInterface {
 				delete_post_meta( $post_id, $this->id . '_' . $option['value'] );
 			}
 		}
+	}
+
+	/**
+	 * Check if WP_Term is checked
+	 * @param int        $term_id WP_Term ID
+	 * @param array|bool $taxonomies Array of WP_Term objects to check
+	 * @return string
+	 */
+	public function is_term_checked( int $term_id, array|bool $taxonomies ): string {
+		foreach ( $taxonomies as $current_taxonomy ) {
+			if ( $current_taxonomy->term_id === $term_id ) {
+				return 'checked';
+			}
+		}
+
+		return '';
 	}
 
 	/**
