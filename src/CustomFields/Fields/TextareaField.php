@@ -11,7 +11,7 @@ use HeikkiVihersalo\CustomPostTypes\Interfaces\CustomFieldInterface;
  * @package Kotisivu\BlockTheme
  * @since 1.0.0
  */
-class TextAreaField extends CustomField implements CustomFieldInterface {
+class TextareaField extends CustomField implements CustomFieldInterface {
 	/**
 	 * @inheritDoc
 	 */
