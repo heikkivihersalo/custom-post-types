@@ -83,6 +83,12 @@ Following metaboxes are available:
 - Rich Text
 - Radio Group
 
+Also for taxonomies, you can add following metaboxes:
+
+- Checkbox Group
+- Select
+- Radio Group
+
 ```php
 
 public function metaboxes(): array {
@@ -183,6 +189,24 @@ public function metaboxes(): array {
                     'label' => 'Option 3',
                 ),
             ),
+        ),
+        array(
+            'id'       => 'taxonomy_checkbox_group_input',
+            'label'    => __( 'Taxonomy Checkbox Group', 'heikkivihersalo-custom-post-types' ),
+            'type'     => 'taxonomy-checkbox-group',
+            'taxonomy' => 'cb-group-taxonomy',
+		),
+        array(
+            'id'       => 'taxonomy_radio_field_input',
+            'label'    => __( 'Taxonomy Radio', 'heikkivihersalo-custom-post-types' ),
+            'type'     => 'taxonomy-radio',
+            'taxonomy' => 'radio-taxonomy',
+		),
+        array(
+            'id'       => 'taxonomy_select_input',
+            'label'    => __( 'Taxonomy Select', 'heikkivihersalo-custom-post-types' ),
+            'type'     => 'taxonomy-select',
+            'taxonomy' => 'select-taxonomy',
         ),
     );
 }
