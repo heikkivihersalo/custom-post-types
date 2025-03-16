@@ -1,4 +1,4 @@
-.image-uploader__button {
+.hv-post-type-image-uploader__button {
 	background: none;
 	border: none;
 	margin: 0;
@@ -6,7 +6,7 @@
 	cursor: pointer;
 }
 
-.image-uploader__button--choose {
+.hv-post-type-image-uploader__button--choose {
 	display: inline-block;
 
 	color: #fff;
@@ -30,13 +30,13 @@
 	box-sizing: border-box;
 }
 
-.image-uploader__button--remove {
+.hv-post-type-image-uploader__button--remove {
 	color: hsl(0, 100%, 50%);
 	text-decoration: underline;
 	margin-top: 0.25rem;
 }
 
-.hide-image-uploader {
+.hide-hv-post-type-image-uploader {
 	clip: rect(0 0 0 0);
 	clip-path: inset(50%);
 	height: 1px;

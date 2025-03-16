@@ -2,13 +2,13 @@
  * Internal dependencies
  */
 const imageUploaderElements = {
-    uploadImage: document.querySelector('.image-uploader__button--choose'),
-    imageInput: document.querySelector('.image-uploader__input'),
-    removeImage: document.querySelector('.image-uploader__button--remove'),
-    imagePreview: document.querySelector('.image-uploader__preview')
+    uploadImage: document.querySelector('.hv-post-type-image-uploader__button--choose'),
+    imageInput: document.querySelector('.hv-post-type-image-uploader__input'),
+    removeImage: document.querySelector('.hv-post-type-image-uploader__button--remove'),
+    imagePreview: document.querySelector('.hv-post-type-image-uploader__preview')
 };
 
-const isHiddenSelector = 'hide-image-uploader';
+const isHiddenSelector = 'hide-hv-post-type-image-uploader';
 
 /**
  * Handle the image uploader
@@ -56,9 +56,9 @@ function handleSelectImage(e) {
         }
 
         frame = wp.media({
-            title: __('Select or Upload Media', 'kotisivu-block-theme'),
+            title: __('Select or Upload Media', 'heikkivihersalo-custom-post-types'),
             button: {
-                text: __('Use this media', 'kotisivu-block-theme'),
+                text: __('Use this media', 'heikkivihersalo-custom-post-types'),
             },
             multiple: false,
         });
