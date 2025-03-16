@@ -19,7 +19,7 @@ use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\RadioGroupField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\RichTextField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\SelectField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TextField;
-use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TextAreaField;
+use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TextareaField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\UrlField;
 
 /**
@@ -175,7 +175,7 @@ class CustomFields {
 					break;
 
 				case 'textarea':
-					$textarea_field = new TextAreaField( $field['id'], $field['label'], $post );
+					$textarea_field = new TextareaField( $field['id'], $field['label'], $post );
 					echo $textarea_field->get_html();
 					break;
 
@@ -270,7 +270,7 @@ class CustomFields {
 					break;
 
 				case 'textarea':
-					$textarea_field = new TextAreaField( $field['id'] );
+					$textarea_field = new TextareaField( $field['id'] );
 					$textarea_field->save( $post_id );
 					break;
 
