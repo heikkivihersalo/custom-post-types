@@ -18,6 +18,9 @@ use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\NumberField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\RadioGroupField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\RichTextField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\SelectField;
+use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TaxonomyCheckboxGroupField;
+use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TaxonomyRadioField;
+use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TaxonomySelectField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TextField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\TextareaField;
 use HeikkiVihersalo\CustomPostTypes\CustomFields\Fields\UrlField;
@@ -169,6 +172,21 @@ class CustomFields {
 					echo $select_field->get_html();
 					break;
 
+				case 'taxonomy-checkbox-group':
+					$taxonomy_checkbox_group_field = new TaxonomyCheckboxGroupField( $field['id'], $field['label'], $post, array(), $field['taxonomy'] );
+					echo $taxonomy_checkbox_group_field->get_html();
+					break;
+
+				case 'taxonomy-radio':
+					$taxonomy_radio_field = new TaxonomyRadioField( $field['id'], $field['label'], $post, array(), $field['taxonomy'] );
+					echo $taxonomy_radio_field->get_html();
+					break;
+
+				case 'taxonomy-select':
+					$taxonomy_select_field = new TaxonomySelectField( $field['id'], $field['label'], $post, array(), $field['taxonomy'] );
+					echo $taxonomy_select_field->get_html();
+					break;
+
 				case 'text':
 					$text_field = new TextField( $field['id'], $field['label'], $post );
 					echo $text_field->get_html();
@@ -262,6 +280,21 @@ class CustomFields {
 				case 'select':
 					$select_field = new SelectField( $field['id'] );
 					$select_field->save( $post_id );
+					break;
+
+				case 'taxonomy-checkbox-group':
+					$taxonomy_radio_field = new TaxonomyCheckboxGroupField( $field['id'], $field['label'], null, array(), $field['taxonomy'] );
+					$taxonomy_radio_field->save( $post_id );
+					break;
+
+				case 'taxonomy-radio':
+					$taxonomy_radio_field = new TaxonomyRadioField( $field['id'], $field['label'], null, array(), $field['taxonomy'] );
+					$taxonomy_radio_field->save( $post_id );
+					break;
+
+				case 'taxonomy-select':
+					$taxonomy_select_field = new TaxonomySelectField( $field['id'], $field['label'], null, array(), $field['taxonomy'] );
+					$taxonomy_select_field->save( $post_id );
 					break;
 
 				case 'text':
